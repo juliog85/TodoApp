@@ -1,9 +1,10 @@
 package com.julio.todoapp
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.julio.todoapp.data.Todo
 import com.julio.todoapp.databinding.ActivityCreateBinding
-import com.julio.todoapp.databinding.ActivityMainBinding
 
 class CreateActivity : AppCompatActivity() {
 
@@ -13,11 +14,22 @@ class CreateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupListeners()
     }
 
-    private fun setupListeners(){
-        binding.btnSalvar.setOnClickListener{
-
+    private fun setupListeners() {
+        with(binding) {
+            btnSalvar.setOnClickListener {
+                val todo = Todo(
+                    titulo = etTitulo.text.toString(),
+                    descricao = etDescricao.text.toString()
+                )
+                val intent = Intent()
+                intent.putExtra("TODO", todo)
+                setResult(RESULT_OK, intent)
+                finish()
+            }
         }
     }
 }
+
